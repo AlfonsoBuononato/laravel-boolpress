@@ -30,5 +30,9 @@ Route::prefix('admin')
         Route::get('/', 'HomeController@index')->name('home');
         
         //Rotta resource posts
-        Route::get('/posts', 'PostController');
+        Route::resource('/posts', 'PostController');
+        //ROTTA RESOURCE POSTS INDEX
+        Route::get('/index', 'PostController@index')->name('index');
+        //ROTTA RESOURCE POSTS SHOW
+        Route::get('/admin.posts.show', 'PostController@Show')->name('show');
     });
