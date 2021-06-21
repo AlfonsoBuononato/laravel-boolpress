@@ -31,8 +31,4 @@ Route::prefix('admin')
         
         //Rotta resource posts
         Route::resource('/posts', 'PostController');
-        //ROTTA RESOURCE POSTS INDEX
-        Route::get('/index', 'PostController@index')->name('index');
-        //ROTTA RESOURCE POSTS SHOW
-        Route::get('/admin.posts.show', 'PostController@Show')->name('show');
     });

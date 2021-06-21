@@ -3,6 +3,7 @@
 @section('content')
 
     <h1>Post</h1>
+    <h2><a href="{{ route('admin.posts.create') }}">CREA UN NUOVO POST</a></h2>
     <div class="container">
         <table>
             <thead>
@@ -19,8 +20,14 @@
                         <td>{{$post->title}}</td>
                         <td>{{$post->anno}}</td>
                         <td><a href="{{ route('admin.posts.show', $post->id) }}">DETTAGLI</a></td>
-                        <td>EDIT</td>
-                        <td>DELETE</td>
+                        <td><a href="{{route('admin.posts.edit', $post->id)}}">EDIT</a></td>
+                        <td>
+                            <form action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <input type="submit" value="delete">
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
