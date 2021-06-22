@@ -1,7 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-
+@if (session('deleted'))
+    <div class="alert">
+        <strong>{{session('deleted')}}</strong>
+        deleted succesfully
+    </div>
+@endif
     <h1>Post</h1>
     <h2><a href="{{ route('admin.posts.create') }}">CREA UN NUOVO POST</a></h2>
     <div class="container">
