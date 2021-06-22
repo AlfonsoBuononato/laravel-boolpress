@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Post;
+use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use illuminate\Contracts\Validation\Rule;
 use Illuminate\Support\Str;
-use App\Post;
 
 class PostController extends Controller
 {
@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create');
+        return view('admin.posts.create',);
     }
 
     /**
@@ -40,6 +40,14 @@ class PostController extends Controller
     public function store(Request $request)
     {
         $data = $request->all();
+        /* VALIDAZIONI */
+        $request->validate([
+            'title'=> 'required|unique:posts',
+            'content'=> 'required',
+        ], [
+            'required' => 'the :attribute is required!!',
+            'unique' => 'the :attribute is unique!!'
+        ]);
 
         $new_post = new Post;
         $data['slug'] = Str::slug($data['title'], '-');
@@ -83,12 +91,25 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $data = $request->all();
-
+        /* VALIDAZIONI */
+        $request->validate([
+            'title'=>[
+                'required',
+                Rule::unique('posts')->ignore($id),
+                'max:255',
+            ],
+            'content'=>'required',
+        ],[
+            'required'=> 'the :attribute is required',
+            'unique'=> 'the :attribute is already',
+            'max'=> 'hai superato i 255 caratteri'
+        ]);
+        
         $post = Post::find($id);
-
         $post->update($data);
-
+        
         return redirect()->route('admin.posts.show', $post->id);
     }
 
