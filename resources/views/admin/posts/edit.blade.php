@@ -27,6 +27,16 @@
                 <input type="text" name="content" id="content" value="{{old('content', $posts->content)}}">
             </div>
 
+            <div class="container">
+                <label for="category_id">category</label>
+                <select name="category_id" id="category_id">
+                    <option value="">seleziona la tua categoria</option>
+                    @foreach ($categories as $category)
+                        <option value="{{$category->id}}" @if($category->id == old('category_id')) selected @endif>{{$category->name}}</option>
+                    @endforeach    
+                </select>                
+            </div>
+
             <button type="submit">EDIT</button>
         </form>
     </div>

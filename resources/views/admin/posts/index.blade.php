@@ -16,6 +16,7 @@
                     <th>id</th>
                     <th>title</th>
                     <th>anno</th>
+                    <th>categorie</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,6 +25,11 @@
                         <td>{{$post->id}}</td>
                         <td>{{$post->title}}</td>
                         <td>{{$post->anno}}</td>
+                            @if ($post->category)
+                                <td>{{$post->category->name}}</td>
+                            @else
+                                <td>NULL</td>
+                            @endif
                         <td><a href="{{ route('admin.posts.show', $post->id) }}">DETTAGLI</a></td>
                         <td><a href="{{route('admin.posts.edit', $post->id)}}">EDIT</a></td>
                         <td>
@@ -37,6 +43,13 @@
                 @endforeach
             </tbody>
         </table>
+        <div>
+            @foreach ($categories as $category)
+                <h4>{{$category->name}}</h4>
+                @foreach ($category->posts as $post)
+                    <h5>{{$post->title}}</h5>
+                @endforeach
+            @endforeach
+        </div>
     </div>
-
 @endsection

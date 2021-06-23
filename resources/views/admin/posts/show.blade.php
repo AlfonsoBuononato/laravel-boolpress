@@ -6,5 +6,8 @@
         <li>slug: {{ $posts->slug }}</li>
         <li>content: {{ $posts->content }}</li>
         <li>anno: {{ $posts->anno }}</li>
+        @if ($posts->category)
+            <li>categoria: {{$posts->category->name}}</li>
+        @endif
     </ul>
 @endsection

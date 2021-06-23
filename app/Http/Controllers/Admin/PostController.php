@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Post;
+use App\Category;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +19,8 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::all();
-        return view('admin.posts.index', compact('posts'));
+        $categories = Category::all();
+        return view('admin.posts.index', compact('posts', 'categories'));
     }
 
     /**
@@ -28,7 +30,9 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('admin.posts.create',);
+        $categories = Category::all();
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**
@@ -44,6 +48,7 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|unique:posts',
             'content'=> 'required',
+            'category_id'=> 'nullable|exists:categories,id'
         ], [
             'required' => 'the :attribute is required!!',
             'unique' => 'the :attribute is unique!!'
@@ -66,7 +71,8 @@ class PostController extends Controller
     public function show($id)
     {
         $posts = Post::find($id);
-        return view('admin.posts.show', compact('posts'));
+        $categories = Category::all();
+        return view('admin.posts.show', compact('posts', 'categories'));
     }
 
     /**
@@ -79,7 +85,9 @@ class PostController extends Controller
     {
         $posts = Post::find($id);
 
-        return view('admin.posts.edit', compact('posts'));
+        $categories = Category::all();
+
+        return view('admin.posts.edit', compact('posts', 'categories'));
     }
 
     /**
@@ -101,6 +109,7 @@ class PostController extends Controller
                 'max:255',
             ],
             'content'=>'required',
+            'category_id'=>'nullable|exists:categories,id'
         ],[
             'required'=> 'the :attribute is required',
             'unique'=> 'the :attribute is already',
