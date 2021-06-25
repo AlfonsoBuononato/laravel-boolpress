@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\Admin\PostController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -14,21 +16,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('guest.welcome');
-});
-
 Auth::routes();
 
-
 Route::prefix('admin')
-    ->namespace('admin')
-    ->middleware('auth')
-    ->name('admin.')
-    ->group(function(){
-        //Rotta Home Admin
-        Route::get('/', 'HomeController@index')->name('home');
-        
-        //Rotta resource posts
-        Route::resource('/posts', 'PostController');
-    });
+->namespace('admin')
+->middleware('auth')
+->name('admin.')
+->group(function(){
+    //Rotta Home Admin
+    Route::get('/', 'HomeController@index')->name('home');
+    
+    //Rotta resource posts
+    Route::resource('/posts', 'PostController');
+});
+
+
+
+Route::get('{any?}', function () {
+    return view('guest.home');
+})->where("any", ".*");

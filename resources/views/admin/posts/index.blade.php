@@ -33,7 +33,7 @@
                         <td><a href="{{ route('admin.posts.show', $post->id) }}">DETTAGLI</a></td>
                         <td><a href="{{route('admin.posts.edit', $post->id)}}">EDIT</a></td>
                         <td>
-                            <form action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
+                            <form class="delete" action="{{route('admin.posts.destroy', $post->id)}}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <input type="submit" value="delete">
