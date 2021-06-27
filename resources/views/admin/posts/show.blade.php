@@ -9,5 +9,12 @@
         @if ($posts->category)
             <li>categoria: {{$posts->category->name}}</li>
         @endif
+        @if ($posts->tags)
+            <li>
+                @foreach ($posts->tags as $tag)
+                {{$tag->name}}
+                @endforeach
+            </li>
+        @endif
     </ul>
 @endsection

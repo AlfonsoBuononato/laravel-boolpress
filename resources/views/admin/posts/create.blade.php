@@ -36,6 +36,17 @@
                 </select>                
             </div>
 
+            {{-- TAGS --}}
+            <div class="tags">
+            @foreach ($tags as $tags)
+                <input type="checkbox" name="tags[]" id="tag-{{$tag->id}}"
+                    value="{{$tag->id}}" 
+                    @if (in_array($tag->id, old('tags', []))) checked @endif 
+                >
+                <label for="tag-{{$tag->id}}">{{$tag->name}}</label>
+            @endforeach
+            </div>
+
             <button type="submit">CREATE</button>
         </form>
     </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Validation\Rule;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -30,9 +31,11 @@ class PostController extends Controller
      */
     public function create()
     {
+        $posts = Post::all();
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.create', compact('categories'));
+        return view('admin.posts.create', compact('categories', 'tags', 'posts'));
     }
 
     /**
@@ -48,7 +51,8 @@ class PostController extends Controller
         $request->validate([
             'title'=> 'required|unique:posts',
             'content'=> 'required',
-            'category_id'=> 'nullable|exists:categories,id'
+            'category_id'=> 'nullable|exists:categories,id',
+            'tags'=> 'nullable|exists:tags,id',
         ], [
             'required' => 'the :attribute is required!!',
             'unique' => 'the :attribute is unique!!'
@@ -58,6 +62,10 @@ class PostController extends Controller
         $data['slug'] = Str::slug($data['title'], '-');
         $new_post->fill($data);
         $new_post->save();
+
+        if(array_key_exists('tags', $data)){
+            $new_post->tags()->attach($data['tags']);
+        }
         
         return redirect()->route('admin.posts.show', $new_post->id);
     }
@@ -72,6 +80,7 @@ class PostController extends Controller
     {
         $posts = Post::find($id);
         $categories = Category::all();
+        $tags = Tag::all();
         return view('admin.posts.show', compact('posts', 'categories'));
     }
 
@@ -84,10 +93,10 @@ class PostController extends Controller
     public function edit($id)
     {
         $posts = Post::find($id);
-
         $categories = Category::all();
+        $tags = Tag::all();
 
-        return view('admin.posts.edit', compact('posts', 'categories'));
+        return view('admin.posts.edit', compact('posts', 'categories', 'tags'));
     }
 
     /**

@@ -37,6 +37,22 @@
                 </select>                
             </div>
 
+             {{-- TAGS --}}
+             <div class="tags">
+                @dump($posts->tags)
+                @foreach ($tags as $tag)
+                    <input type="checkbox" name="tags[]" id="tag-{{$tag->id}}"
+                        value="{{$tag->id}}" 
+                        @if($errors->any() && in_array($tag->id, old('tags', []))) 
+                            checked
+                        @elseif(!$errors->any() && $posts->tags->contains($tag->id))
+                            checked
+                        @endif
+                    >
+                    <label for="tag-{{$tag->id}}">{{$tag->name}}</label>
+                @endforeach
+                </div>
+
             <button type="submit">EDIT</button>
         </form>
     </div>
