@@ -19,10 +19,6 @@
                 <input type="text" name="title" id="title" value="{{old('title', $posts->title)}}">
             </div>
             <div class="container">
-                <label for="anno">anno</label>
-                <input type="number" name="anno" id="anno" value="{{old('number', $posts->number)}}">
-            </div>
-            <div class="container">
                 <label for="content">content</label>
                 <input type="text" name="content" id="content" value="{{old('content', $posts->content)}}">
             </div>
@@ -39,7 +35,6 @@
 
              {{-- TAGS --}}
              <div class="tags">
-                @dump($posts->tags)
                 @foreach ($tags as $tag)
                     <input type="checkbox" name="tags[]" id="tag-{{$tag->id}}"
                         value="{{$tag->id}}" 

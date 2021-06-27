@@ -118,7 +118,8 @@ class PostController extends Controller
                 'max:255',
             ],
             'content'=>'required',
-            'category_id'=>'nullable|exists:categories,id'
+            'category_id'=>'nullable|exists:categories,id',
+            'tags'=> 'nullable|exists:tags,id',
         ],[
             'required'=> 'the :attribute is required',
             'unique'=> 'the :attribute is already',
@@ -127,6 +128,12 @@ class PostController extends Controller
         
         $post = Post::find($id);
         $post->update($data);
+
+        if(array_key_exists('tags', $data)){
+            $post->tags()->sync($data['tags']);
+        }else{
+            $post->tags()->detach();
+        }
         
         return redirect()->route('admin.posts.show', $post->id);
     }
@@ -142,6 +149,8 @@ class PostController extends Controller
         $post= Post::find($id);
 
         $post->delete();
+        
+        $post->tags()->detach();
 
         return redirect()->route('admin.posts.index')->with('deleted', $post->title);
     }

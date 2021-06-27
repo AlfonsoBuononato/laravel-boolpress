@@ -19,10 +19,6 @@
                 <input type="text" name="title" id="title" value="{{old('title')}}">
             </div>
             <div class="container">
-                <label for="anno">anno</label>
-                <input type="number" name="anno" id="anno" value="{{old('anno')}}">
-            </div>
-            <div class="container">
                 <label for="content">content</label>
                 <input type="text" name="content" id="content" value="{{old('content')}}">
             </div>

@@ -19,7 +19,6 @@ class PostsTableSeeder extends Seeder
             $new_post->title = 'Post title' . ($i + 1);
             $new_post->slug = Str::slug($new_post->title, '-');
             $new_post->content = 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta porro, aliquam ullam, repellat unde deleniti tempore nihil iure delectus ex ipsam fuga? Expedita similique asperiores doloremque ex praesentium sint dicta?';
-            $new_post->anno = '10';
 
             $new_post->save();
 
