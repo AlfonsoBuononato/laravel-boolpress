@@ -34,7 +34,7 @@
 
             {{-- TAGS --}}
             <div class="tags">
-            @foreach ($tags as $tags)
+            @foreach ($tags as $tag)
                 <input type="checkbox" name="tags[]" id="tag-{{$tag->id}}"
                     value="{{$tag->id}}" 
                     @if (in_array($tag->id, old('tags', []))) checked @endif 
