@@ -1,20 +1,19 @@
 <template>
-        <div class="container">           
-            <ul v-for="post in posts" :key="`id-${post.id}`">
-               <li>titolo: {{post.title}}</li> 
-               <li>Contenuto: {{post.content}}</li>
-               <li><router-link :to="{name: 'post-detail', params:{slug: post.slug}}">Dettagli</router-link></li>
-            </ul>
+        <div class="container">
+            <post :post="posts"/>
             <button @click="getPost(paginate.pageCurrent - 1)" v-show="paginate.pageCurrent > 1">prev</button>
             <button @click="getPost(paginate.pageCurrent + 1)" v-show="paginate.pageCurrent < paginate.lastPage">next</button>
-            <a href="/admin">log in</a>
         </div>
 </template>
 
 <script>
 import axios from 'axios';
+import post from '../components/post.vue'
 export default {
     name: 'blog',
+    components: {
+        post
+    },
     data(){
         return{
             posts: [],
